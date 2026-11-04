@@ -142,8 +142,17 @@ namespace SaoPlugin
                 foreach (var npc in targets)
                 {
                     if (!npc.active) continue;
-                    // SimpleStrikeNPC crea el golpe internamente (sin nombrar NPC.HitInfo) y ya aplica la defensa
-                    npc.SimpleStrikeNPC(damage, dir, false, 2f);
+                    // Daño directo a la vida: no depende de ninguna versión de la API de golpes (StrikeNPC/HitInfo)
+                    // La defensa del enemigo reduce el daño (mitad de su defensa, como en el juego)
+                    int final = Math.Max(1, damage - npc.defense / 2);
+                    npc.life -= final;
+                    npc.velocity.X += dir * 3f * npc.knockBackResist;   // pequeño empujón
+                    TSPlayer.All.SendData(PacketTypes.CreateCombatText, final.ToString(), (int)Color.OrangeRed.PackedValue, npc.Center.X, npc.Center.Y - 20f);
+                    if (npc.life <= 0)
+                    {
+                        npc.life = 0;
+                        npc.checkDead();    // reparte el botín y lo da por muerto
+                    }
                     npc.netUpdate = true;
                 }
             }
