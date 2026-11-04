@@ -142,16 +142,8 @@ namespace SaoPlugin
                 foreach (var npc in targets)
                 {
                     if (!npc.active) continue;
-                    // La defensa del enemigo reduce el daño (mitad de su defensa, como en el juego)
-                    int final = Math.Max(1, damage - npc.defense / 2);
-                    var hit = new NPC.HitInfo
-                    {
-                        Damage = final,
-                        SourceDamage = damage,
-                        Knockback = 2f,
-                        HitDirection = dir
-                    };
-                    npc.StrikeNPC(hit);
+                    // SimpleStrikeNPC crea el golpe internamente (sin nombrar NPC.HitInfo) y ya aplica la defensa
+                    npc.SimpleStrikeNPC(damage, dir, false, 2f);
                     npc.netUpdate = true;
                 }
             }
