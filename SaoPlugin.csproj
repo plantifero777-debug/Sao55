@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <AssemblyName>SaoPlugin</AssemblyName>
+    <RootNamespace>SaoPlugin</RootNamespace>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Ajusta la versión a la de tu servidor si no coincide -->
+    <PackageReference Include="TShock" Version="6.2.1" />
+  </ItemGroup>
+
+</Project>
